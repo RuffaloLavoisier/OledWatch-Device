@@ -1,5 +1,5 @@
 #sunghwan watch v.2 menu gui
 
-remove
+mainSERVER
 
 we need GPS , Bluetooth and any function.
