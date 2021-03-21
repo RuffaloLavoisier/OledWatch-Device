@@ -3,3 +3,4 @@
 mainSERVER
 
 we need GPS , Bluetooth and any function.
+start
