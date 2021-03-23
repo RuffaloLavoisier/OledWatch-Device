@@ -17,7 +17,7 @@
 auto timer = timer_create_default();
 Adafruit_SH1106 display(OLED_RESET);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
-//VL53L0X sensor;
+
 RTC_DS3231 rtc;
 
 unsigned long prev = 0;
