@@ -13,9 +13,8 @@ void menu() {
       display.setCursor(centerX - 64, centerY - 32);
     }
 
-    if (pointer_menu == count)//pointer and menu count match
+    if (pointer_menu == count)//pointer and menu count match >> count : draw menu number , pointer menu : control user from button
     {
-
       display.print(">");
       //------------------------------------------
       if (LOW == digitalRead(button_center)) {
@@ -31,7 +30,6 @@ void menu() {
           case 3://select alarm
             //alarm_state = !alarm_state;
             //digitalWrite(ALARM, alarm_state);
-            
             alarm_clock();
             break;
           case 4://select temp
@@ -50,9 +48,9 @@ void menu() {
     }
     else//non pointer
     {
-      display.print(" ");
+      display.print(" ");//just print title
     }
-    display.println(MENU_TITLE[count]);
+    display.println(MENU_TITLE[count]);//print menu title
     display.println();
   }
   display.display();
