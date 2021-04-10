@@ -45,7 +45,7 @@ uint8_t US_h = 0;
 uint8_t US_m = 0;
 uint8_t US_s = 0;
 
-uint8_t  clockStyle = 3;
+uint8_t clockStyle = 3;
 
 uint8_t led = 0;
 uint8_t laser = 13;
@@ -75,6 +75,7 @@ void setup() {
   centerX = display.width() / 2;
   centerY = display.height() / 2;
   Radius = centerY - 2;
+  
   if (!rtc.begin()) {
     Serial.println("Couldn't find RTC!");
     Serial.flush();
@@ -111,7 +112,6 @@ void setup() {
 
 void loop() {
 
-
   timer.tick();
   DateTime now = rtc.now();
 
@@ -120,7 +120,6 @@ void loop() {
   US_m = US.minute();
   US_s = US.second();
   //temp_monitor();
-
 
   while (digitalRead(button_center) == LOW)menu_state = LOW;
   Delay(100);
@@ -158,7 +157,8 @@ void loop() {
   }
   else if (state == false)
   {
-    if (LOW == digitalRead(button_up)) {
+    if (LOW == digitalRead(button_up)) 
+    {
       Serial.println(clockStyle);
       clockStyle = clockStyle + 1;
       if (clockStyle > 4)clockStyle = 1;
@@ -166,18 +166,24 @@ void loop() {
     DispalyClock(now.hour(), now.minute(), now.second() , now.month(), now.day(), now.dayOfTheWeek());
     //colorWipe(strip.Color(  0,   0,   0), 50); // Black/off
     Delay(100);
-    if (alarm_check(now.hour(), now.minute()) && once_state) {
+    if (alarm_check(now.hour(), now.minute()) && once_state) 
+    {
       Serial.println("alarm on");
       digitalWrite(ALARM, HIGH);
     }
   }
 }
+
+
+//----------------------------------
+
 void Delay(int delay_time) {//if you need delay without stop just stay here
   long prev = millis();
   while (millis() - prev < delay_time);//stay here
-
 }
-void showTimePin(int center_x, int center_y, double pl1, double pl2, double pl3) {
+
+void showTimePin(int center_x, int center_y, double pl1, double pl2, double pl3) //need display show time pin
+{
   double x1, x2, y1, y2;
   double RAD = 3.141592 / 180;
   double LR = 89.99;
@@ -197,7 +203,7 @@ void showTimePin(int center_x, int center_y, double pl1, double pl2, double pl3)
 //  colorWipe(strip.Color(  0, 255,   0), 50); // Green
 //  colorWipe(strip.Color(  0,   0, 255), 50); // Blue
 //  colorWipe(strip.Color(  0,   0,   0), 50); // Black/off
-void colorWipe(uint32_t c, uint8_t wait) {
+void colorWipe(uint32_t c, uint8_t wait) {//led
   for (uint16_t i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
     strip.show();

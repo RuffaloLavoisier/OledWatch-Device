@@ -2,7 +2,7 @@ void temp_monitor() {
 
   bool buttonhit = false;
   bool ok_button = false;
-  Serial.print("   in");
+  Serial.print(" in");
   while (1) {
     //------------------
     display.clearDisplay();
@@ -76,7 +76,6 @@ void analog_clock(int h, int m, int s, int M, int D) {
   display.display();
 
 }
-
 
 void dual_clock(int h, int m, int s, int M, int D) {
   //KOREA
