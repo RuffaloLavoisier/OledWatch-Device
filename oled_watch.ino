@@ -5,6 +5,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH1106.h>
 #include <Adafruit_NeoPixel.h>
+#include <SoftwareSerial.h>
 #include "RTClib.h"
 #include <timer.h>
 
@@ -49,13 +50,21 @@ uint8_t clockStyle = 3;
 
 uint8_t led = 0;
 uint8_t laser = 13;
+//---------pin setting----------- 
+
 /*
-    PF7(AD0):
-    PC6(DP5):
-   PC7(DP13):laser
-  -PB7(DP11): 
-      serial:BT,GPS
-         I2C:GYRO
+    ****BOTTOM*****
+    vibe
+    xshut
+    I2C
+
+    ***TOP***
+    AD0
+    DP5
+    led alarm
+    buzzer
+    I2C
+
 */
 uint8_t alarm_h = 3;
 uint8_t alarm_m = 53;
@@ -64,25 +73,29 @@ uint8_t button_up = 10;
 uint8_t button_center = 9;
 uint8_t button_down = 8;
 
-int pointer_menu = 0;
+int pointer_menu = 0;//where is pointer 
 
 bool once_state = false;
 bool menu_state = HIGH;
 bool state = false;
 
 void setup() {
-  Serial.begin(9600);
-  centerX = display.width() / 2;
-  centerY = display.height() / 2;
-  Radius = centerY - 2;
+  Serial.begin(9600);               //Serial Debug
+  Serial1.begin(9600);              //Bluetooth start !
+ 
+  centerX = display.width() / 2;    //find center value
+  centerY = display.height() / 2;   //find center value
+  Radius  = centerY - 2;            //fine rad value
   
-  if (!rtc.begin()) {
+  if (!rtc.begin()) 
+  {
     Serial.println("Couldn't find RTC!");
     Serial.flush();
     abort();
   }
 
-  if (rtc.lostPower()) {
+  if (rtc.lostPower()) 
+  {
     // this will adjust to the date and time at compilation
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
@@ -130,10 +143,12 @@ void loop() {
     state = !state;
     menu_state = HIGH;
   }
-  if (state == true) {
-    pointer_menu = 1;
-    while (state == true) {
 
+  if (state == true) 
+  {
+    pointer_menu = 1;
+    while (state == true) 
+    {
       timer.tick();
       if (LOW == digitalRead(button_up))
       {
@@ -173,15 +188,13 @@ void loop() {
     }
   }
 }
-
-
 //----------------------------------
-
 void Delay(int delay_time) {//if you need delay without stop just stay here
   long prev = millis();
   while (millis() - prev < delay_time);//stay here
 }
 
+//thank you google !
 void showTimePin(int center_x, int center_y, double pl1, double pl2, double pl3) //need display show time pin
 {
   double x1, x2, y1, y2;
@@ -211,7 +224,7 @@ void colorWipe(uint32_t c, uint8_t wait) {//led
   }
 }
 
-void keypower() {
+void keypower() {//stay operatr
   pinMode(4, OUTPUT);
   digitalWrite(4, LOW);
   delay(500);
