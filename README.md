@@ -8,3 +8,12 @@ BT APP
 BT cmd 
 phone - BT -arduino
 git API - commit alarm
+now : commit watch -> TIMER function
+
+## How to show
+
+close time - now time 
+
+## build 
+
+struct
