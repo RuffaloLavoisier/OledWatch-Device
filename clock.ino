@@ -260,23 +260,83 @@ void alarm_clock() {
 
 void DispalyClock(int h, int m, int s, int M, int D, int DN) {
 
-
   display.clearDisplay();
   // you can clock style setting
-  switch (clockStyle) {
-    case 1:
-      mix_clock(h, m, s, M, D, DN);
-      break;
-    case 2:
-      full_text_clock(h, m, s, M, D);
-      break;
-    case 3:
-      dual_clock(h, m, s, M, D);
-      break;
-    case 4:
-      analog_clock(h, m, s, M, D);
-      break;
+  if (git_commit_time_check()) { //need commit 
+    GitCommitTime();
   }
+  else { //normal
+    switch (clockStyle) {
+      case 1:
+        mix_clock(h, m, s, M, D, DN);
+        break;
+      case 2:
+        full_text_clock(h, m, s, M, D);
+        break;
+      case 3:
+        dual_clock(h, m, s, M, D);
+        break;
+      case 4:
+        analog_clock(h, m, s, M, D);
+        break;
+    }
+  }
+
+
+}
+
+bool git_commit_time_check() {
+  if (Morning || Lunch || Dinner)
+    return true;
+  else
+    return false;
+}
+
+void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
+  //analog watch
+  display.drawCircle(centerY, centerY, Radius - 6 , WHITE);
+  showTimePin(centerY, centerY, 0.1, 0.4, h * 5 + (int)(m * 5 / 60));
+  showTimePin(centerY, centerY, 0.1, 0.70, m);
+  // showTimePin(centerX, centerY, 0.1, 0.9, s);
+
+  //day name
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(centerY * 2 + 3, 23);
+  display.print(daysOfTheWeek[DN]);
+  
+  //date
+  display.setCursor(centerY * 2 + 3, 9);
+  if ( M < 10 ) display.print("0");
+  display.print(M);
+  display.print(" / ");
+  if ( D < 10 ) display.print("0");
+  display.println(D);
+
+  //display.println((const char*)pgm_read_word(&(weekString[iWeek])));
+  //display.setCursor(centerY * 2 + 28, 23);
+  //display.println((const char*)pgm_read_word(&(ampmString[iAmPm])));
+
+  //digital watch 
+ display.setTextSize(2);
+ display.setCursor(centerX - 46, centerY + 6);
+ if (h < 10)
+   display.print("0");
+ display.print(h);
+ display.print(":");
+ if (m < 10)
+   display.print("0");
+ display.print(m);
+ display.print(":");
+ if (s < 10)
+   display.print("0");
+ display.println(s);
+ display.display();
+}
+void print_RSSI(){
+//1.연결 확인 후 바로 RSSI 값을 출력 
+//2.휴대폰에서 RSSI 명령어를 치면 시계에도 출력 
+
 
 
 }
