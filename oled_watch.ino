@@ -15,6 +15,15 @@
 #define PIXEL_COUNT 1
 #define PIXEL_PIN   6
 
+#define MORNING_OPEN   8
+#define MORNING_CLOSE 10
+
+#define LUNCH_OPEN    13
+#define LUNCH_CLOSE   15
+
+#define DINNER_OPEN   20
+#define DINNER_CLOSE  23
+
 auto timer = timer_create_default();
 Adafruit_SH1106 display(OLED_RESET);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
@@ -79,6 +88,13 @@ bool once_state = false;
 bool menu_state = HIGH;
 bool state = false;
 
+uint8_t git_commit_hour;
+
+// what time is it ?
+bool Morning = git_commit_hour <= MORNING_CLOSE && git_commit_hour >= MORNING_OPEN; 
+bool Lunch   = git_commit_hour <= LUNCH_CLOSE && git_commit_hour >= LUNCH_OPEN;
+bool Dinner  = git_commit_hour <= DINNER_CLOSE && git_commit_hour >= DINNER_OPEN;
+
 void setup() {
   Serial.begin(9600);               //Serial Debug
   Serial1.begin(9600);              //Bluetooth start !
@@ -121,6 +137,8 @@ void setup() {
   dev_m = now.month();
   dev_d = now.day();
 
+  
+
 }
 
 void loop() {
@@ -133,6 +151,7 @@ void loop() {
   US_m = US.minute();
   US_s = US.second();
   //temp_monitor();
+  git_commit_hour = now.hour();
 
   while (digitalRead(button_center) == LOW)menu_state = LOW;
   Delay(100);
