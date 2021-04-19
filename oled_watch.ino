@@ -75,12 +75,12 @@ uint8_t laser = 13;
     I2C
 
 */
-uint8_t alarm_h = 3;
-uint8_t alarm_m = 53;
+uint8_t alarm_h = 6;
+uint8_t alarm_m = 45;
 
-uint8_t button_up = 10;
-uint8_t button_center = 9;
-uint8_t button_down = 8;
+uint8_t button_up     = 10;
+uint8_t button_center =  9;
+uint8_t button_down   = 8;
 
 int pointer_menu = 0;//where is pointer 
 
@@ -91,9 +91,9 @@ bool state = false;
 uint8_t git_commit_hour;
 
 // what time is it ?
-bool Morning = git_commit_hour <= MORNING_CLOSE && git_commit_hour >= MORNING_OPEN; 
-bool Lunch   = git_commit_hour <= LUNCH_CLOSE && git_commit_hour >= LUNCH_OPEN;
-bool Dinner  = git_commit_hour <= DINNER_CLOSE && git_commit_hour >= DINNER_OPEN;
+bool Morning = git_commit_hour < MORNING_CLOSE && git_commit_hour >= MORNING_OPEN; 
+bool Lunch   = git_commit_hour < LUNCH_CLOSE   && git_commit_hour >= LUNCH_OPEN;
+bool Dinner  = git_commit_hour < DINNER_CLOSE  && git_commit_hour >= DINNER_OPEN;
 
 void setup() {
   Serial.begin(9600);               //Serial Debug
@@ -150,7 +150,7 @@ void loop() {
   US_h = US.hour();
   US_m = US.minute();
   US_s = US.second();
-  //temp_monitor();
+
   git_commit_hour = now.hour();
 
   while (digitalRead(button_center) == LOW)menu_state = LOW;
