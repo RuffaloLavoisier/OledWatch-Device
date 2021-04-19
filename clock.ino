@@ -317,14 +317,24 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   /***initialize value***/
   // 목표 값에 현재 시간을 넣으면 남은 시간을 출력
 
-
-
    /********calculate timer for remain*********/
+  remain_hr = CloseCommitTime - now.hour();
 
+  TargetTime = CloseCommitTime * 1000;
+
+
+  remain_second = 60 - now.second();
+  remain_minute = 60 - now.minute();
+  remain_hour = CloseCommitTime - now.hour();
+
+      //old version
+      /*
   if(now.second()==0)
   { 
     remain_sec = 0;
     enable_59 = 1;
+
+   
   }
   else
   { 
@@ -340,12 +350,9 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
     }
     remain_sec = 60 - now.second();
   }
-
-   
-
- 
-  //date
-  /*
+*/
+      //date
+      /*
     display.setCursor(centerY * 2 + 3, 9);
     if ( M < 10 ) display.print("0");
     display.print(M);
@@ -354,12 +361,12 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
     display.println(D);
   */
 
-  //display.println((const char*)pgm_read_word(&(weekString[iWeek])));
-  //display.setCursor(centerY * 2 + 28, 23);
-  //display.println((const char*)pgm_read_word(&(ampmString[iAmPm])));
+      //display.println((const char*)pgm_read_word(&(weekString[iWeek])));
+      //display.setCursor(centerY * 2 + 28, 23);
+      //display.println((const char*)pgm_read_word(&(ampmString[iAmPm])));
 
-  //digital watch
-  display.setTextSize(2);
+      //digital watch
+      display.setTextSize(2);
   display.setCursor(centerX - 46, centerY + 6); // x,y -> 128,64
   if (remain_hr < 10)
     display.print("0");
