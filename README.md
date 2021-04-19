@@ -4,8 +4,7 @@ we need GPS , Bluetooth and any function. my code is very low level. because i u
 
 ## design
 
-![watch](./oled-watch.jpg)
-<img src="./oled-watch.jpg" height="100px" width="300px">
+<img src="./oled-watch.jpg" height="300px" width="250px">
 
 ## solve
 
