@@ -76,7 +76,6 @@ void analog_clock(int h, int m, int s, int M, int D) {
   display.display();
 
 }
-
 void dual_clock(int h, int m, int s, int M, int D) {
   //KOREA
   display.drawCircle(centerY, Radius - 6, Radius - 6 , WHITE);
@@ -110,7 +109,6 @@ void dual_clock(int h, int m, int s, int M, int D) {
 
   display.display();
 }
-
 void full_text_clock(int h, int m, int s, int M, int D) {
   display.setTextSize(2);
   display.setTextColor(WHITE);
@@ -257,13 +255,13 @@ void alarm_clock() {
     }
   }
 }
-
 void DispalyClock(int h, int m, int s, int M, int D, int DN) {
 
   display.clearDisplay();
   // you can clock style setting
-  if (git_commit_time_check()) { //need commit 
-    GitCommitTime();
+  // if (git_commit_time_check()) { //need commit
+  if (1) { //need commit
+    GitCommitTime(h, m, s, M, D, DN);
   }
   else { //normal
     switch (clockStyle) {
@@ -294,49 +292,88 @@ bool git_commit_time_check() {
 
 void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   //analog watch
-  display.drawCircle(centerY, centerY, Radius - 6 , WHITE);
+  display.drawCircle(centerX, centerY / 2, Radius - 10 , WHITE);
   showTimePin(centerY, centerY, 0.1, 0.4, h * 5 + (int)(m * 5 / 60));
   showTimePin(centerY, centerY, 0.1, 0.70, m);
   // showTimePin(centerX, centerY, 0.1, 0.9, s);
 
   //day name
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(centerY * 2 + 3, 23);
-  display.print(daysOfTheWeek[DN]);
-  
+  /*  display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(centerY * 2 + 3, 23);
+    display.print(daysOfTheWeek[DN]);
+  */
+  //  timer algorithm
+
+  //setting commit close time
+  if      (Morning)CloseCommitTime = MORNING_CLOSE;
+  else if (Lunch)  CloseCommitTime = LUNCH_CLOSE;
+  else if (Dinner) CloseCommitTime = DINNER_CLOSE;
+
+  //cal remain time
+
+  //10:0:0 - 13:0:0 * 11:0:0 , 22:0:0 - 2:0:0 * 23:0:0
+  /*
+
+  */
+
+  remain_hr = CloseCommitTime - now.hour();
+  if (now.second() == 0) {
+    remain_sec = 0;
+    remain_min = 0;
+  }
+  else {
+    remain_sec = 60 - now.second();
+    if (now.second() == 1) {
+      if (remain_min == 0) {
+        remain_min = 59;
+        remain_hr = remain - 1;
+      }
+    }
+  }
+
+  /*
+    if (CloseCommitTime > now.hour()) {
+    remain_hr = CloseCommitTime - now.hour();   // if 5 , 5-2, 5-3,5-4,5-5,5-6
+    }
+    else if (CloseCommitTime < now.hour()) {
+    remain_hr =  now.hour() - CloseCommitTime ; // if 23, 5-23 , 5-0, 5-1...
+    }
+    remain_min = 60 - now.minute();               // 60 - 43, 60 - 0 =0
+    remain_sec = 60 - now.second();               // 60 - 43, 60 - 0
+  */
   //date
-  display.setCursor(centerY * 2 + 3, 9);
-  if ( M < 10 ) display.print("0");
-  display.print(M);
-  display.print(" / ");
-  if ( D < 10 ) display.print("0");
-  display.println(D);
+  /*
+    display.setCursor(centerY * 2 + 3, 9);
+    if ( M < 10 ) display.print("0");
+    display.print(M);
+    display.print(" / ");
+    if ( D < 10 ) display.print("0");
+    display.println(D);
+  */
 
   //display.println((const char*)pgm_read_word(&(weekString[iWeek])));
   //display.setCursor(centerY * 2 + 28, 23);
   //display.println((const char*)pgm_read_word(&(ampmString[iAmPm])));
 
-  //digital watch 
- display.setTextSize(2);
- display.setCursor(centerX - 46, centerY + 6);
- if (h < 10)
-   display.print("0");
- display.print(h);
- display.print(":");
- if (m < 10)
-   display.print("0");
- display.print(m);
- display.print(":");
- if (s < 10)
-   display.print("0");
- display.println(s);
- display.display();
+  //digital watch
+  display.setTextSize(2);
+  display.setCursor(centerX - 46, centerY + 6); // x,y -> 128,64
+  if (h < 10)
+    display.print("0");
+  display.print(h);
+  display.print(":");
+  if (m < 10)
+    display.print("0");
+  display.print(m);
+  display.print(":");
+  if (s < 10)
+    display.print("0");
+  display.println(s);
+  display.display();
 }
-void print_RSSI(){
-//1.연결 확인 후 바로 RSSI 값을 출력 
-//2.휴대폰에서 RSSI 명령어를 치면 시계에도 출력 
-
-
+void print_RSSI() {
+  //1.연결 확인 후 바로 RSSI 값을 출력
+  //2.휴대폰에서 RSSI 명령어를 치면 시계에도 출력
 
 }
