@@ -306,42 +306,44 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   //  timer algorithm
 
   //setting commit close time
-  if      (Morning)CloseCommitTime = MORNING_CLOSE;
-  else if (Lunch)  CloseCommitTime = LUNCH_CLOSE;
-  else if (Dinner) CloseCommitTime = DINNER_CLOSE;
+  if      (Morning) CloseCommitTime = MORNING_CLOSE;
+  else if (Lunch)   CloseCommitTime = LUNCH_CLOSE;
+  else if (Dinner)  CloseCommitTime = DINNER_CLOSE;
 
   //cal remain time
 
   //10:0:0 - 13:0:0 * 11:0:0 , 22:0:0 - 2:0:0 * 23:0:0
-  /*
+  
+  /***initialize value***/
+  // 목표 값에 현재 시간을 넣으면 남은 시간을 출력
 
-  */
 
-  remain_hr = CloseCommitTime - now.hour();
-  if (now.second() == 0) {
+
+   /********calculate timer for remain*********/
+
+  if(now.second()==0)
+  { 
     remain_sec = 0;
-    remain_min = 0;
+    enable_59 = 1;
   }
-  else {
-    remain_sec = 60 - now.second();
-    if (now.second() == 1) {
-      if (remain_min == 0) {
+  else
+  { 
+    if(enable_59)
+    {
+      remain_min = remain_min - 1;
+      if( remain_min < 0 )
+      {
         remain_min = 59;
-        remain_hr = remain - 1;
+        remain_hr = remain_hr - 1;
       }
+      enable_59 = 0;
     }
+    remain_sec = 60 - now.second();
   }
 
-  /*
-    if (CloseCommitTime > now.hour()) {
-    remain_hr = CloseCommitTime - now.hour();   // if 5 , 5-2, 5-3,5-4,5-5,5-6
-    }
-    else if (CloseCommitTime < now.hour()) {
-    remain_hr =  now.hour() - CloseCommitTime ; // if 23, 5-23 , 5-0, 5-1...
-    }
-    remain_min = 60 - now.minute();               // 60 - 43, 60 - 0 =0
-    remain_sec = 60 - now.second();               // 60 - 43, 60 - 0
-  */
+   
+
+ 
   //date
   /*
     display.setCursor(centerY * 2 + 3, 9);
@@ -359,17 +361,17 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   //digital watch
   display.setTextSize(2);
   display.setCursor(centerX - 46, centerY + 6); // x,y -> 128,64
-  if (h < 10)
+  if (remain_hr < 10)
     display.print("0");
-  display.print(h);
+  display.print(remain_hr);
   display.print(":");
-  if (m < 10)
+  if (remain_min < 10)
     display.print("0");
-  display.print(m);
+  display.print(remain_min);
   display.print(":");
-  if (s < 10)
+  if (remain_sec < 10)
     display.print("0");
-  display.println(s);
+  display.println(remain_sec);
   display.display();
 }
 void print_RSSI() {
