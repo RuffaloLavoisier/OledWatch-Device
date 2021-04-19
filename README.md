@@ -18,7 +18,22 @@ now : commit watch -> TIMER function
 
 close time - now time   
 
+
+## sample
+
+( TARGET : 13시 )  
+ 9시  59분 59초	->    0시  0분  0초  
+10시   0분  0초	->    3시  0분  0초  
+10시   0분  1초	->    2시 59분 59초  
+10시   0분 59초	->    2시 59분  1초  
+10시   1분  0초	->    2시 59분  0초  
+10시  59분 59초	->    2시  0분  1초  
+11시   0분  0초	->    2시  0분  0초  
+11시   0분  1초	->    1시 59분 59초  
+
+시작시간 남은 시간 목표 시간  
+
 ## build 
 
 struct  
-refactor
+refactor  
