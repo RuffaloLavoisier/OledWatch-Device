@@ -303,7 +303,7 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
     display.setCursor(centerY * 2 + 3, 23);
     display.print(daysOfTheWeek[DN]);
   */
-  //  timer algorithm
+  //  Timer algorithm
 
   //setting commit close time
   if      (Morning) CloseCommitTime = MORNING_CLOSE;
@@ -318,14 +318,22 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   // 목표 값에 현재 시간을 넣으면 남은 시간을 출력
 
    /********calculate timer for remain*********/
-  remain_hr = CloseCommitTime - now.hour();
+  target_hour = CloseCommitTime - now.hour();
 
-  TargetTime = CloseCommitTime * 1000;
+  if( 0 < now.second() ) //target second is 0
+  { 
+    target_hour = target_hour - 1;
+    target_minute = 60;
+    target_minute = target_minute - 1;
+    remain_second = 60 - now.second();
 
-
-  remain_second = 60 - now.second();
-  remain_minute = 60 - now.minute();
-  remain_hour = CloseCommitTime - now.hour();
+    remain_minute = target_minute - now.minute();
+    remain_hour = target_hour - onw.hour();
+  }
+  else 
+  {
+    remain_second = 0; //now second and target second same value 0
+  }
 
       //old version
       /*
