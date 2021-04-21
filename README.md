@@ -6,6 +6,8 @@ we need GPS , Bluetooth and any function. my code is very low level. because i u
 
 <img src="./oled-watch.jpg" height="300px" width="250px">
 
+https://www.youtube.com/watch?v=URcfMHQa684
+
 ## solve
 
 BT APP  
