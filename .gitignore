@@ -1,0 +1,12 @@
+# general
+doc
+.vscode/
+
+# device log
+log/
+
+# bluetooth log
+bluetooth_machine_log/
+
+# GPS log file
+GPS_log/

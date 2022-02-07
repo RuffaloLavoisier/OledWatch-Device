@@ -91,8 +91,8 @@ void dual_clock(int h, int m, int s, int M, int D) {
     display.print("*");
   else if (h >= 0 && h <= 11) //AM
     display.print(" ");
-  //US
 
+  //UTC
   display.drawCircle(display.width() - centerY, Radius - 6, Radius - 6 , WHITE);
   showTimePin(display.width() - centerY, Radius - 6, 0.1, 0.4, US_h * 5 + (int)(US_m * 5 / 60));
   showTimePin(display.width() - centerY, Radius - 6, 0.1, 0.6, US_m);
@@ -101,11 +101,23 @@ void dual_clock(int h, int m, int s, int M, int D) {
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.setCursor(display.width() - centerY - 5, display.height() - 9);
-  display.print("US");
+  //display.print("US");
+  display.print("UTC");
   if (US_h >= 12 && US_h <= 23)//PM
     display.print("*");
   else if (US_h >= 0 && US_h <= 11) //AM
     display.print(" ");
+
+  //nontification
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(centerX, display.height() - 9);
+  if (nontification == true) {
+    display.print("*");
+  } else if (nontification == false) {
+    display.print(" ");
+  }
+
 
   display.display();
 }
@@ -139,6 +151,9 @@ void full_text_clock(int h, int m, int s, int M, int D) {
   display.println(s);
   display.display();
 }
+
+
+
 void mix_clock(int h, int m, int s, int M, int D, int DN) {
   display.drawCircle(centerY, centerY, Radius - 6 , WHITE);
   showTimePin(centerY, centerY, 0.1, 0.4, h * 5 + (int)(m * 5 / 60));
@@ -255,42 +270,47 @@ void alarm_clock() {
     }
   }
 }
+
+void test_mode() {
+  digitalWrite(laser, HIGH);
+ 
+}
 void DispalyClock(int h, int m, int s, int M, int D, int DN) {
 
   display.clearDisplay();
   // you can clock style setting
   // if (git_commit_time_check()) { //need commit
-  if (1) { //need commit
-    GitCommitTime(h, m, s, M, D, DN);
+  //if (1) { //need commit
+  //  GitCommitTime(h, m, s, M, D, DN);
+  //  }
+  //  else { //normal
+  switch (clockStyle) {
+    case 1:
+      mix_clock(h, m, s, M, D, DN);
+      break;
+    case 2:
+      full_text_clock(h, m, s, M, D);
+      break;
+    case 3:
+      dual_clock(h, m, s, M, D);
+      break;
+    case 4:
+      analog_clock(h, m, s, M, D);
+      break;
   }
-  else { //normal
-    switch (clockStyle) {
-      case 1:
-        mix_clock(h, m, s, M, D, DN);
-        break;
-      case 2:
-        full_text_clock(h, m, s, M, D);
-        break;
-      case 3:
-        dual_clock(h, m, s, M, D);
-        break;
-      case 4:
-        analog_clock(h, m, s, M, D);
-        break;
-    }
-  }
+  //}
 
 
 }
-
-bool git_commit_time_check() {
+/*
+  bool git_commit_time_check() {
   if (Morning || Lunch || Dinner)
     return true;
   else
     return false;
-}
+  }
 
-void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
+  void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   //analog watch
   display.drawCircle(centerX, centerY / 2, Radius - 10 , WHITE);
   showTimePin(centerY, centerY, 0.1, 0.4, h * 5 + (int)(m * 5 / 60));
@@ -298,99 +318,70 @@ void GitCommitTime(int h, int m, int s, int M, int D, int DN) {
   // showTimePin(centerX, centerY, 0.1, 0.9, s);
 
   //day name
-  /*  display.setTextSize(1);
-    display.setTextColor(WHITE);
-    display.setCursor(centerY * 2 + 3, 23);
-    display.print(daysOfTheWeek[DN]);
-  */
-  //  Timer algorithm
+  //  display.setTextSize(1);
+   // display.setTextColor(WHITE);
+  //  display.setCursor(centerY * 2 + 3, 23);
+   // display.print(daysOfTheWeek[DN]);
+
+  //  timer algorithm
 
   //setting commit close time
-  if      (Morning) CloseCommitTime = MORNING_CLOSE;
-  else if (Lunch)   CloseCommitTime = LUNCH_CLOSE;
-  else if (Dinner)  CloseCommitTime = DINNER_CLOSE;
+  if      (Morning)CloseCommitTime = MORNING_CLOSE;
+  else if (Lunch)  CloseCommitTime = LUNCH_CLOSE;
+  else if (Dinner) CloseCommitTime = DINNER_CLOSE;
 
   //cal remain time
 
   //10:0:0 - 13:0:0 * 11:0:0 , 22:0:0 - 2:0:0 * 23:0:0
-  
-  /***initialize value***/
-  // 목표 값에 현재 시간을 넣으면 남은 시간을 출력
 
-   /********calculate timer for remain*********/
-  target_hour = CloseCommitTime - now.hour();
 
-  if( 0 < now.second() ) //target second is 0
-  { 
-    target_hour = target_hour - 1;
-    target_minute = 60;
-    target_minute = target_minute - 1;
-    remain_second = 60 - now.second();
+  CloseCommitTime
+  if (60 - now.second())
 
-    remain_minute = target_minute - now.minute();
-    remain_hour = target_hour - onw.hour();
-  }
-  else 
-  {
-    remain_second = 0; //now second and target second same value 0
-  }
+   //   if (CloseCommitTime > now.hour()) {
+    //  remain_hr = CloseCommitTime - now.hour();   // if 5 , 5-2, 5-3,5-4,5-5,5-6
+    //  }
+   //   else if (CloseCommitTime < now.hour()) {
+   //   remain_hr =  now.hour() - CloseCommitTime ; // if 23, 5-23 , 5-0, 5-1...
+    //  }
+    //  remain_min = 60 - now.minute();               // 60 - 43, 60 - 0 =0
+    //  remain_sec = 60 - now.second();               // 60 - 43, 60 - 0
 
-      //old version
-      /*
-  if(now.second()==0)
-  { 
-    remain_sec = 0;
-    enable_59 = 1;
+    //date
 
-   
-  }
-  else
-  { 
-    if(enable_59)
-    {
-      remain_min = remain_min - 1;
-      if( remain_min < 0 )
-      {
-        remain_min = 59;
-        remain_hr = remain_hr - 1;
-      }
-      enable_59 = 0;
-    }
-    remain_sec = 60 - now.second();
-  }
-*/
-      //date
-      /*
-    display.setCursor(centerY * 2 + 3, 9);
-    if ( M < 10 ) display.print("0");
-    display.print(M);
-    display.print(" / ");
-    if ( D < 10 ) display.print("0");
-    display.println(D);
-  */
+   //   display.setCursor(centerY * 2 + 3, 9);
+   //   if ( M < 10 ) display.print("0");
+   //   display.print(M);
+   //   display.print(" / ");
+   //   if ( D < 10 ) display.print("0");
+  //    display.println(D);
 
-      //display.println((const char*)pgm_read_word(&(weekString[iWeek])));
-      //display.setCursor(centerY * 2 + 28, 23);
-      //display.println((const char*)pgm_read_word(&(ampmString[iAmPm])));
 
-      //digital watch
-      display.setTextSize(2);
+    //display.println((const char*)pgm_read_word(&(weekString[iWeek])));
+    //display.setCursor(centerY * 2 + 28, 23);
+    //display.println((const char*)pgm_read_word(&(ampmString[iAmPm])));
+
+    //digital watch
+    display.setTextSize(2);
   display.setCursor(centerX - 46, centerY + 6); // x,y -> 128,64
-  if (remain_hr < 10)
+  if (h < 10)
     display.print("0");
-  display.print(remain_hr);
+  display.print(h);
   display.print(":");
-  if (remain_min < 10)
+  if (m < 10)
     display.print("0");
-  display.print(remain_min);
+  display.print(m);
   display.print(":");
-  if (remain_sec < 10)
+  if (s < 10)
     display.print("0");
-  display.println(remain_sec);
+  display.println(s);
   display.display();
-}
-void print_RSSI() {
+  }
+  void print_RSSI() {
   //1.연결 확인 후 바로 RSSI 값을 출력
   //2.휴대폰에서 RSSI 명령어를 치면 시계에도 출력
 
-}
+  }
+
+
+*/
