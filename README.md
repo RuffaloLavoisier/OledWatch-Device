@@ -12,7 +12,7 @@
 
 손목시계와 스마트폰은 블루투스로 연동하여 주요 기능을 더욱 확장해서 사용할 수 있습니다. 
 
-<img src="./img/oledwatch.jpg" height="300px" width="450px">
+<img align="center" style="margin-left: auto; margin-right: auto; display: block;" src="./img/oledwatch.jpg" height="300px" width="450px">
 
 We communicate. It shares notifications, information, location, and device status with Android.  
 
@@ -29,15 +29,15 @@ we need GPS , Bluetooth and any function. my code is very low level. because i u
 
 ### Photo
 
-<img src="./img/oled-watch.jpg" height="300px" width="250px">    
+<img align="center" style="margin-left: auto; margin-right: auto; display: block;" src="./img/oled-watch.jpg" height="300px" width="250px">    
 
 >듀얼 시계 모드 입니다. 로컬 지역 TimeZone 외에 추가로 1개까지 설정할 수 있습니다.   
 
-<img src="./img/oledwatch-mix.jpg" height="300px" width="250px">  
+<img  align="center"style="margin-left: auto; margin-right: auto; display: block;" src="./img/oledwatch-mix.jpg" height="300px" width="250px">  
 
 >아날로그 시계와 디지털 시계를 혼합한 모드 입니다.  2가지 형식의 장단점을 모아서 하나의 모드로 사용할 수 있게 구현하였습니다.  
 
-<img src="./img/menu-op.jpg" height="300px" width="250px">  
+<img align="center" style="margin-left: auto; margin-right: auto; display: block;" src="./img/menu-op.jpg" height="300px" width="250px">  
 
 >Menu GUI 진입한 모습입니다. 디바이스의 가장 큰 특징으로 Menu 기능을 첨가하여 친숙한 GUI 방식으로 개발하였습니다. 위 기능으로 진입할 시 시계 외에도 다양한 기능을 접할 수 있습니다.  
 
